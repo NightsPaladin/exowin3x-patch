@@ -1,80 +1,123 @@
-    eXoWin3x Collection
-    Cross-Platform Patch (v1.0)
-    =======================================================
+# eXoWin3x — Cross-Platform Patch (v1.0)
 
-UNOFFICIAL — This is a personal project and is not affiliated with, endorsed
-by, or supported by the eXoWin3x project or the retro-exo.com team.
+> **Unofficial** — This is a personal project and is not affiliated with, endorsed by,
+> or supported by the eXoWin3x project or the retro-exo.com team.
 
-DESCRIPTION
------------
-This is the cross-platform patch for the eXoWin3x collection of
-Windows 3.0 / 3.1 / 3.11 games.
+A personal cross-platform patch for [eXoWin3x](https://www.retro-exo.com), a curated
+collection of 1,138 Windows 3.0 / 3.1 / 3.11 games. This patch adds unified Bash
+launcher scripts so every game can be played on both **Linux** and **macOS** from a
+single set of `.sh` files with OS-detection — no separate per-platform script pairs.
 
-It adds Bash launcher scripts so all 1,138 games can be played on
-both Linux and macOS.  A single .sh file per game handles both
-platforms using OS-detection blocks — no separate .bsh / .msh files.
+---
 
+## Requirements
 
-REQUIREMENTS
-------------
-Linux:
-  - Flatpak:  https://flatpak.org
-  - DOSBox-ECE flatpak:  com.retro_exo.dosbox-ece-r4482
-      flatpak install flathub com.retro_exo.dosbox-ece-r4482
-  - wget, curl, unzip, python3, sed  (standard on most distros)
-  - Bash 5+  (Ubuntu 20.04+, Arch, Fedora, etc. all ship Bash 5)
-  - aria2c  (optional — required for eXoGUI Lite mode torrent downloads)
+**Linux:**
+- **Bash 5+** — Ubuntu 20.04+, Arch, Fedora, and most modern distros include this
+- **[Flatpak](https://flatpak.org)** — used to run DOSBox-ECE
+- **DOSBox-ECE** Flatpak: `com.retro_exo.dosbox-ece-r4482`
+- `wget`, `curl`, `unzip`, `python3`, `sed` — standard on most distros
+- `aria2c` — optional; required for eXoGUI torrent/Lite mode downloads
 
-macOS:
-  - Homebrew:  https://brew.sh
-  - Install dependencies via Homebrew:
-      brew install bash dosbox-staging gnu-sed curl wget python3 unzip
+**macOS:**
+- **macOS 12 Monterey** or later
+- **[Homebrew](https://brew.sh)** — used to install emulators and utilities
+- **Python 3.11+** — via Homebrew (`brew install python3`), pyenv, or mise
 
-  Optional (for eXoGUI Lite mode torrent downloads):
-      brew install aria2c
+---
 
-    Important:
-      • "bash"           — Bash 5 (macOS ships Bash 3.2)
-      • "dosbox-staging" — the DOSBox emulator
-      • "gnu-sed"        — GNU sed (macOS BSD sed is not compatible)
+## Setup
 
+### 1. Place the collection on a drive
 
-SETUP
------
-1. Copy the contents of this eXoWin3x-Patch/ folder into your
-   eXoWin3x/ collection folder (merge, don't replace):
+The collection works from any location — internal drive, external drive, or network
+share. The folder containing `eXo/`, `Content/`, and `Data/` is the **collection root**.
 
-     eXoWin3x/          ← copy patch contents here
-       eXo/
-       Content/
-       ...
+An external drive formatted as **exFAT** is recommended if you also want to access the
+collection from Windows.
 
-2. Double-click  Setup eXoWin3x.command  (from the eXoWin3x folder).
-   On macOS, Gatekeeper may ask you to allow the script — follow the
-   prompts to approve it.
+### 2. Apply this patch
 
-3. Follow the on-screen prompts.
+Copy the contents of the patch folder into your `eXoWin3x/` collection folder,
+merging with the existing structure:
 
+```
+eXoWin3x/          ← merge patch contents here
+  eXo/
+  Content/
+  ...
+```
 
-PLAYING GAMES
--------------
-After setup you can launch games in two ways:
+No game data or ZIP archives are modified.
 
-  Via eXoGUI (recommended):
-    A Python/PyQt6 GUI frontend is available for browsing and launching
-    games.  See exogui-pyqt/README.md for setup instructions.
-    eXoGUI also supports downloading individual game ZIPs on demand
-    (Lite mode) via a local source or BitTorrent — requires aria2c and
-    a torrent index file (see exogui-pyqt/README.md for details).
+### 3. Run setup
 
-  Directly:
-    Navigate to:  eXoWin3x/eXo/eXoWin3x/!win3x/<GameDir>/
-    Double-click the  <GameName>.command  file (or run  <GameName>.sh
-    in a terminal on Linux).  On first launch you will be offered the
-    option to install (decompress) the game.
+Double-click **`Setup eXoWin3x.command`**.
 
+On macOS, Gatekeeper may prompt you to allow the script — follow the on-screen
+prompts to approve it. The setup script installs dependencies and configures the
+collection for your platform.
 
-CONTACT
--------
-Patches maintained by the eXo community.
-See https://www.retro-exo.com for more information.
+**macOS** — installs the following via Homebrew:
+
+| Package | Purpose |
+|---------|---------|
+| `dosbox-staging` | Primary emulator |
+| `bash` | Bash 5 (macOS ships Bash 3.2) |
+| `gnu-sed` | GNU sed (required by launch scripts) |
+| `aria2` | Multi-connection download manager |
+| `wget` | Fallback downloader |
+| `python3` | Python runtime |
+
+**Linux** — installs the DOSBox-ECE Flatpak if not already present.
+
+### 4. Launch the GUI
+
+Double-click **`exogui.command`** to open eXoGUI.
+
+See the [eXoGUI repository](https://github.com/NightsPaladin/exogui-pyqt) for full
+setup and usage documentation.
+
+---
+
+## Playing Games Directly
+
+Without the GUI, navigate to:
+
+```
+eXoWin3x/eXo/eXoWin3x/!win3x/<GameDir>/
+```
+
+- **macOS / Linux GUI:** double-click the `<GameName>.command` file
+- **Linux terminal:** run `<GameName>.sh`
+
+On first launch you will be offered the option to install (decompress) the game.
+
+---
+
+## Emulator
+
+| Platform | Emulator | Notes |
+|----------|----------|-------|
+| Linux | DOSBox-ECE (Flatpak) | `com.retro_exo.dosbox-ece-r4482` |
+| macOS | DOSBox Staging | Installed via Homebrew |
+
+---
+
+## Community & Support
+
+- **Discord:** https://discord.gg/37FYaUZ
+- **Website:** https://www.retro-exo.com/community.html
+- **Wiki:** https://wiki.retro-exo.com
+
+---
+
+## Acknowledgements
+
+This patch would not exist without the foundational work of the **eXoWin3x team** —
+the game configurations, per-game DOSBox settings, and the Windows collection itself
+that this patch builds on top of. All of the hard work of curating and configuring
+1,138 games is theirs.
+
+- **eXoWin3x project:** https://www.retro-exo.com
+- **eXoWin3x on Internet Archive:** https://archive.org/details/eXoWin3x
