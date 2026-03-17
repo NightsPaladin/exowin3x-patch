@@ -2,6 +2,9 @@
     Cross-Platform Patch (v1.0)
     =======================================================
 
+UNOFFICIAL — This is a community project and is not affiliated with, endorsed
+by, or supported by the eXoWin3x project or the retro-exo.com team.
+
 DESCRIPTION
 -----------
 This is the cross-platform patch for the eXoWin3x collection of
